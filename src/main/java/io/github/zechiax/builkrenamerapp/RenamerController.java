@@ -1,6 +1,6 @@
 package io.github.zechiax.builkrenamerapp;
 
-import io.github.zechiax.builkrenamerapp.core.FileManager;
+import io.github.zechiax.builkrenamerapp.core.RenameManager;
 import io.github.zechiax.builkrenamerapp.core.FileToRename;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -19,7 +19,7 @@ import static java.lang.System.Logger.Level.DEBUG;
 import static java.lang.System.Logger.Level.INFO;
 
 public class RenamerController {
-    private final FileManager fileManager = new FileManager();
+    private final RenameManager fileManager = new RenameManager();
     private final System.Logger logger = System.getLogger(RenamerController.class.getName());
     @FXML
     public Button addFilesButton;
@@ -30,6 +30,8 @@ public class RenamerController {
     public Button removeSelectedButton;
     @FXML
     public Button clearAllButton;
+    @FXML
+    public ListView renamedFilesListView;
     private Stage stage;
 
     @FXML protected void onAddFilesButtonClick() {

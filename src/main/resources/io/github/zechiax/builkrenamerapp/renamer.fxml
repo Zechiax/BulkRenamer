@@ -23,8 +23,9 @@
     </VBox>
 
     <!-- Right VBox -->
-    <VBox spacing="5" AnchorPane.rightAnchor="50" AnchorPane.topAnchor="60" AnchorPane.bottomAnchor="60">
+    <VBox spacing="5" AnchorPane.rightAnchor="50" AnchorPane.topAnchor="60" AnchorPane.bottomAnchor="20" >
         <Label text="New Name:" />
+        <ListView fx:id="renamedFilesListView" VBox.vgrow="ALWAYS" />
         <TextField fx:id="newNameTextField" />
         <Button text="Rename" fx:id="renameButton" />
     </VBox>
