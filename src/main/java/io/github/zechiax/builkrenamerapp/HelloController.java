@@ -1,4 +1,4 @@
-package com.example.bulkrenamer;
+package io.github.zechiax.builkrenamerapp;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

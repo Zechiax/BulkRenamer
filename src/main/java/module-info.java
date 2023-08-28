@@ -1,13 +1,9 @@
-module com.example.bulkrenamer {
+module io.github.zechiax.builkrenamerapp {
     requires javafx.controls;
     requires javafx.fxml;
     requires MaterialFX;
 
-    requires org.controlsfx.controls;
-    requires com.dlsc.formsfx;
-    requires net.synedra.validatorfx;
-    requires org.kordamp.ikonli.javafx;
 
-    opens com.example.bulkrenamer to javafx.fxml;
-    exports com.example.bulkrenamer;
+    opens io.github.zechiax.builkrenamerapp to javafx.fxml;
+    exports io.github.zechiax.builkrenamerapp;
 }

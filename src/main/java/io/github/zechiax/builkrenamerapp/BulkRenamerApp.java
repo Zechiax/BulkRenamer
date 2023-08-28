@@ -1,4 +1,4 @@
-package com.example.bulkrenamer;
+package io.github.zechiax.builkrenamerapp;
 
 import io.github.palexdev.materialfx.css.themes.MFXThemeManager;
 import io.github.palexdev.materialfx.css.themes.Themes;
@@ -12,7 +12,7 @@ import java.io.IOException;
 public class BulkRenamerApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(BulkRenamerApp.class.getResource("hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(BulkRenamerApp.class.getResource("renamer.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
         MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
         stage.setTitle("Hello!");
