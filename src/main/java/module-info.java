@@ -6,4 +6,5 @@ module io.github.zechiax.builkrenamerapp {
 
     opens io.github.zechiax.builkrenamerapp to javafx.fxml;
     exports io.github.zechiax.builkrenamerapp;
+    exports io.github.zechiax.builkrenamerapp.core;
 }

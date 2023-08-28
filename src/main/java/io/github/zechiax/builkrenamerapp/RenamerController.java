@@ -1,5 +1,7 @@
 package io.github.zechiax.builkrenamerapp;
 
+import io.github.zechiax.builkrenamerapp.core.FileManager;
+import io.github.zechiax.builkrenamerapp.core.FileToRename;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -17,12 +19,15 @@ import static java.lang.System.Logger.Level.DEBUG;
 import static java.lang.System.Logger.Level.INFO;
 
 public class RenamerController {
+    private final FileManager fileManager = new FileManager();
     private final System.Logger logger = System.getLogger(RenamerController.class.getName());
     @FXML
     public Button addFilesButton;
     @FXML
-    public ListView<File> selectedFilesListView;
-    private final ObservableList<File> newSelectedFiles = FXCollections.observableArrayList();
+    public ListView<FileToRename> selectedFilesListView;
+    private final ObservableList<FileToRename> selectedFiles = FXCollections.observableArrayList();
+    @FXML
+    public Button removeSelectedButton;
     private Stage stage;
 
     @FXML protected void onAddFilesButtonClick() {
@@ -39,15 +44,18 @@ public class RenamerController {
         }
 
         logger.log(INFO, "Files selected: " + files.size());
-        this.newSelectedFiles.addAll(files);
+        this.selectedFiles.addAll(FileToRename.convertToFilesToRename(files));
     }
 
     private void onNewSelectedFilesChange(ListChangeListener.Change<? extends File> change) {
-        logger.log(INFO, "New files selected: " + newSelectedFiles.size());
+        logger.log(INFO, "New files selected: " + selectedFiles.size());
+    }
 
-        this.selectedFilesListView.setItems(newSelectedFiles);
-
-        this.newSelectedFiles.clear();
+    private void onRemoveSelectedButtonClick(ActionEvent actionEvent) {
+        logger.log(INFO, "Remove selected button clicked");
+        var selectedItems = this.selectedFilesListView.getSelectionModel().getSelectedItems();
+        logger.log(DEBUG, "Selected items: " + selectedItems.size());
+        this.selectedFiles.removeAll(selectedItems);
     }
 
     public void setStageAndSetupListeners(Stage stage) {
@@ -59,7 +67,12 @@ public class RenamerController {
         this.stage = stage;
 
         this.addFilesButton.setOnAction(t -> onAddFilesButtonClick());
+        this.removeSelectedButton.setOnAction(this::onRemoveSelectedButtonClick);
 
-        this.newSelectedFiles.addListener(this::onNewSelectedFilesChange);
+        this.selectedFiles.addListener(this::onNewSelectedFilesChange);
+        this.selectedFilesListView.setItems(selectedFiles);
+        // Turn on multiple selection
+        this.selectedFilesListView.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.MULTIPLE);
+
     }
 }
