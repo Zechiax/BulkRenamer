@@ -28,6 +28,8 @@ public class RenamerController {
     private final ObservableList<FileToRename> selectedFiles = FXCollections.observableArrayList();
     @FXML
     public Button removeSelectedButton;
+    @FXML
+    public Button clearAllButton;
     private Stage stage;
 
     @FXML protected void onAddFilesButtonClick() {
@@ -48,7 +50,7 @@ public class RenamerController {
     }
 
     private void onNewSelectedFilesChange(ListChangeListener.Change<? extends File> change) {
-        logger.log(INFO, "New files selected: " + selectedFiles.size());
+        logger.log(INFO, "Selected files changed");
     }
 
     private void onRemoveSelectedButtonClick(ActionEvent actionEvent) {
@@ -56,6 +58,11 @@ public class RenamerController {
         var selectedItems = this.selectedFilesListView.getSelectionModel().getSelectedItems();
         logger.log(DEBUG, "Selected items: " + selectedItems.size());
         this.selectedFiles.removeAll(selectedItems);
+    }
+
+    private void onClearAllButtonClick(ActionEvent actionEvent) {
+        logger.log(INFO, "Clear all button clicked");
+        this.selectedFiles.clear();
     }
 
     public void setStageAndSetupListeners(Stage stage) {
@@ -68,6 +75,7 @@ public class RenamerController {
 
         this.addFilesButton.setOnAction(t -> onAddFilesButtonClick());
         this.removeSelectedButton.setOnAction(this::onRemoveSelectedButtonClick);
+        this.clearAllButton.setOnAction(this::onClearAllButtonClick);
 
         this.selectedFiles.addListener(this::onNewSelectedFilesChange);
         this.selectedFilesListView.setItems(selectedFiles);
