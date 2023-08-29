@@ -4,8 +4,10 @@ import io.github.zechiax.builkrenamerapp.core.RenameContext;
 import io.github.zechiax.builkrenamerapp.core.RenamePluginBase;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class ExtensionMask extends RenamePluginBase {
+    private static final Logger logger = Logger.getLogger(ExtensionMask.class.getName());
     private final String pattern = "[E]";
 
     @Override
@@ -15,9 +17,7 @@ public class ExtensionMask extends RenamePluginBase {
 
     @Override
     public ArrayList<String> rename(RenameContext context) {
-        var indices = getPatternIndices(pattern);
-
-        if (indices.length == 0) {
+        if (!isPatternInMask(pattern)) {
             return context.currentNames();
         }
 
@@ -27,7 +27,9 @@ public class ExtensionMask extends RenamePluginBase {
 
         for (int i = 0; i < files.size(); i++) {
             var file = files.get(i);
-            var newName = context.mask();
+            var newName = context.currentNames().get(i);
+            var indices = getPatternIndices(pattern, newName);
+
             for (var index : indices) {
                 // On the index, we replace the pattern with the file name
                 newName = replaceSubstring(newName, file.getExtension(), index, index + pattern.length());

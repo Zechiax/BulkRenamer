@@ -37,7 +37,7 @@ public class RenameManager {
     public ArrayList<String> GetRenamedFiles(String mask) {
         logger.info("Renaming files with mask: " + mask);
         var currentNames = new ArrayList<String>();
-        for (var file : files) {
+        for (var ignored : files) {
             currentNames.add(mask);
         }
 

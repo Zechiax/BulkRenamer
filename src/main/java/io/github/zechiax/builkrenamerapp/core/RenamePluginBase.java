@@ -1,6 +1,7 @@
 package io.github.zechiax.builkrenamerapp.core;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.function.BinaryOperator;
@@ -22,7 +23,10 @@ public abstract class RenamePluginBase implements RenamePlugin {
     }
 
     protected Integer[] getPatternIndices(String pattern) {
-        var mask = context.mask();
+        return getPatternIndices(pattern, context.mask());
+    }
+
+    protected Integer[] getPatternIndices(String pattern, @NotNull String mask) {
         var firstIndex = mask.indexOf(pattern);
 
         if (firstIndex == -1) {
@@ -44,10 +48,15 @@ public abstract class RenamePluginBase implements RenamePlugin {
 
         var indicesArray = indices.toArray(new Integer[0]);
         ArrayUtils.reverse(indicesArray);
+
         return indicesArray;
     }
 
-    protected String replaceSubstring(String string, String replacement, int start, int end) {
+    protected boolean isPatternInMask(String pattern) {
+        return context.mask().contains(pattern);
+    }
+
+    protected String replaceSubstring(@NotNull String string, String replacement, int start, int end) {
         return string.substring(0, start) + replacement + string.substring(end);
     }
 }

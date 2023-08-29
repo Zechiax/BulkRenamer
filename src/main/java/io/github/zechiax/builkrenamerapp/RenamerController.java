@@ -1,11 +1,7 @@
 package io.github.zechiax.builkrenamerapp;
 
-import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.controls.MFXCheckListView;
-import io.github.palexdev.materialfx.controls.MFXListView;
-import io.github.palexdev.materialfx.controls.MFXTextField;
-import io.github.zechiax.builkrenamerapp.core.RenameManager;
 import io.github.zechiax.builkrenamerapp.core.FileToRename;
+import io.github.zechiax.builkrenamerapp.core.RenameManager;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -19,7 +15,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import static java.lang.System.Logger.Level.DEBUG;
 import static java.lang.System.Logger.Level.INFO;
@@ -28,18 +23,18 @@ public class RenamerController {
     private final RenameManager fileManager;
     private final System.Logger logger = System.getLogger(RenamerController.class.getName());
     @FXML
-    public MFXButton addFilesButton;
+    public Button addFilesButton;
     @FXML
-    public MFXListView<FileToRename> selectedFilesListView;
+    public ListView<FileToRename> selectedFilesListView;
     private final ObservableList<FileToRename> selectedFiles = FXCollections.observableArrayList();
     @FXML
-    public MFXButton removeSelectedButton;
+    public Button removeSelectedButton;
     @FXML
-    public MFXButton clearAllButton;
+    public Button clearAllButton;
     @FXML
-    public MFXListView<String> renamedFilesListView;
+    public ListView<String> renamedFilesListView;
     @FXML
-    public MFXTextField newNameTextField;
+    public TextField newNameTextField;
     private Stage stage;
 
     public RenamerController() {
@@ -71,13 +66,10 @@ public class RenamerController {
 
     private void onRemoveSelectedButtonClick(ActionEvent actionEvent) {
         logger.log(INFO, "Remove selected button clicked");
-        var selectedItems = this.selectedFilesListView.getSelectionModel().getSelection();
+        var selectedItems = this.selectedFilesListView.getSelectionModel().getSelectedItems();
         logger.log(DEBUG, "Selected items: " + selectedItems.size());
 
-        // We map observable map <Integer, FileToRename> to ArrayList<FileToRename>
-        // and then we remove all selected items from the list
-        var selectedItemsList = selectedItems.values();
-        this.selectedFiles.removeAll(selectedItemsList);
+        this.selectedFiles.removeAll(selectedItems);
         logger.log(DEBUG, "Selected items removed from list");
 
         // We clear the selection
@@ -119,7 +111,7 @@ public class RenamerController {
         this.selectedFiles.addListener(this::onNewSelectedFilesChange);
         this.selectedFilesListView.setItems(selectedFiles);
         // Turn on multiple selection
-        this.selectedFilesListView.getSelectionModel().setAllowsMultipleSelection(true);
+        this.selectedFilesListView.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.MULTIPLE);
 
         this.newNameTextField.textProperty().addListener((observable, oldValue, newValue) -> onTextFieldChange());
     }

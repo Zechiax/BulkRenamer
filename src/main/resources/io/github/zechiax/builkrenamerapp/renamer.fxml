@@ -12,22 +12,22 @@
     <!-- Left VBox -->
     <VBox spacing="5" AnchorPane.bottomAnchor="60" AnchorPane.leftAnchor="50" AnchorPane.topAnchor="60">
         <Label text="Selected Files:" />
-        <MFXListView fx:id="selectedFilesListView" VBox.vgrow="ALWAYS" />
+        <ListView fx:id="selectedFilesListView" VBox.vgrow="ALWAYS" />
     </VBox>
 
     <!-- Right VBox -->
     <VBox spacing="5" AnchorPane.bottomAnchor="20" AnchorPane.rightAnchor="50" AnchorPane.topAnchor="60">
         <Label text="New Name:" />
-        <MFXListView fx:id="renamedFilesListView" prefHeight="276.0" prefWidth="209.0" VBox.vgrow="ALWAYS" />
+        <ListView fx:id="renamedFilesListView" prefHeight="276.0" prefWidth="209.0" VBox.vgrow="ALWAYS" />
     </VBox>
 
     <!-- Bottom Buttons -->
     <HBox spacing="10" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="50" AnchorPane.rightAnchor="150">
-        <MFXButton fx:id="addFilesButton" text="Add Files" />
-        <MFXButton fx:id="removeSelectedButton" text="Remove Selected" />
-        <MFXButton fx:id="clearAllButton" text="Clear All" />
-        <MFXTextField fx:id="newNameTextField" maxWidth="Infinity" VBox.vgrow="ALWAYS" text="[N]" />
+        <Button fx:id="addFilesButton" text="Add Files" />
+        <Button fx:id="removeSelectedButton" text="Remove Selected" />
+        <Button fx:id="clearAllButton" text="Clear All" />
+        <TextField fx:id="newNameTextField" maxWidth="Infinity" VBox.vgrow="ALWAYS" text="[N].[E]" />
     </HBox>
-     <MFXButton fx:id="renameButton" layoutX="300.0" layoutY="213.0" text="Rename" />
+     <Button fx:id="renameButton" layoutX="300.0" layoutY="213.0" text="Rename" />
 
 </AnchorPane>

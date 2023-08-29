@@ -5,6 +5,7 @@ module io.github.zechiax.builkrenamerapp {
     requires org.apache.commons.lang3;
     requires org.apache.commons.io;
     requires java.logging;
+    requires annotations;
 
 
     opens io.github.zechiax.builkrenamerapp to javafx.fxml;
