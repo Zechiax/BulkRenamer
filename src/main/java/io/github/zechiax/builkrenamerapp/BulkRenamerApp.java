@@ -7,10 +7,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import java.util.logging.*;
+
 
 import java.io.IOException;
 
 public class BulkRenamerApp extends Application {
+    private static final Logger logger = Logger.getLogger(BulkRenamerApp.class.getName());
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(BulkRenamerApp.class.getResource("renamer.fxml"));

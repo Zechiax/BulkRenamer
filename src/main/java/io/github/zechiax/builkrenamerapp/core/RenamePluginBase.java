@@ -3,6 +3,7 @@ package io.github.zechiax.builkrenamerapp.core;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
+import java.util.function.BinaryOperator;
 
 public abstract class RenamePluginBase implements RenamePlugin {
     private final String name = this.getClass().getSimpleName();
