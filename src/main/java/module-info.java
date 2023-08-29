@@ -3,6 +3,7 @@ module io.github.zechiax.builkrenamerapp {
     requires javafx.fxml;
     requires MaterialFX;
     requires org.apache.commons.lang3;
+    requires org.apache.commons.io;
 
 
     opens io.github.zechiax.builkrenamerapp to javafx.fxml;

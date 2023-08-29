@@ -27,7 +27,7 @@ public class NameMask extends RenamePluginBase {
             var newName = mask;
             for (var index : indices) {
                 // On the index, we replace the pattern with the file name
-                newName = replaceSubstring(newName, file.getName(), index, index + pattern.length());
+                newName = replaceSubstring(newName, file.getBaseName(), index, index + pattern.length());
             }
             newNames.add(i, newName);
         }

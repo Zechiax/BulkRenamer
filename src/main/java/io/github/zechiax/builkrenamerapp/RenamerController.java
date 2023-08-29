@@ -1,5 +1,9 @@
 package io.github.zechiax.builkrenamerapp;
 
+import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.controls.MFXCheckListView;
+import io.github.palexdev.materialfx.controls.MFXListView;
+import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.zechiax.builkrenamerapp.core.RenameManager;
 import io.github.zechiax.builkrenamerapp.core.FileToRename;
 import javafx.application.Platform;
@@ -15,6 +19,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import static java.lang.System.Logger.Level.DEBUG;
 import static java.lang.System.Logger.Level.INFO;
@@ -23,18 +28,18 @@ public class RenamerController {
     private final RenameManager fileManager;
     private final System.Logger logger = System.getLogger(RenamerController.class.getName());
     @FXML
-    public Button addFilesButton;
+    public MFXButton addFilesButton;
     @FXML
-    public ListView<FileToRename> selectedFilesListView;
+    public MFXListView<FileToRename> selectedFilesListView;
     private final ObservableList<FileToRename> selectedFiles = FXCollections.observableArrayList();
     @FXML
-    public Button removeSelectedButton;
+    public MFXButton removeSelectedButton;
     @FXML
-    public Button clearAllButton;
+    public MFXButton clearAllButton;
     @FXML
-    public ListView<String> renamedFilesListView;
+    public MFXListView<String> renamedFilesListView;
     @FXML
-    public TextField newNameTextField;
+    public MFXTextField newNameTextField;
     private Stage stage;
 
     public RenamerController() {
@@ -56,6 +61,8 @@ public class RenamerController {
 
         logger.log(INFO, "Files selected: " + files.size());
         this.selectedFiles.addAll(FileToRename.convertToFilesToRename(files));
+
+        updateRenamedFilesListView();
     }
 
     private void onNewSelectedFilesChange(ListChangeListener.Change<? extends File> change) {
@@ -64,18 +71,33 @@ public class RenamerController {
 
     private void onRemoveSelectedButtonClick(ActionEvent actionEvent) {
         logger.log(INFO, "Remove selected button clicked");
-        var selectedItems = this.selectedFilesListView.getSelectionModel().getSelectedItems();
+        var selectedItems = this.selectedFilesListView.getSelectionModel().getSelection();
         logger.log(DEBUG, "Selected items: " + selectedItems.size());
-        this.selectedFiles.removeAll(selectedItems);
+
+        // We map observable map <Integer, FileToRename> to ArrayList<FileToRename>
+        // and then we remove all selected items from the list
+        var selectedItemsList = selectedItems.values();
+        this.selectedFiles.removeAll(selectedItemsList);
+        logger.log(DEBUG, "Selected items removed from list");
+
+        // We clear the selection
+        this.selectedFilesListView.getSelectionModel().clearSelection();
+
+        updateRenamedFilesListView();
     }
 
     private void onClearAllButtonClick(ActionEvent actionEvent) {
         logger.log(INFO, "Clear all button clicked");
         this.selectedFiles.clear();
+
+        updateRenamedFilesListView();
     }
 
     private void onTextFieldChange() {
-        logger.log(INFO, "Text field changed");
+        updateRenamedFilesListView();
+    }
+
+    private void updateRenamedFilesListView() {
         var newName = this.newNameTextField.getText();
         logger.log(DEBUG, "New name: " + newName);
         var renamedFiles = this.fileManager.GetRenamedFiles(newName);
@@ -97,7 +119,7 @@ public class RenamerController {
         this.selectedFiles.addListener(this::onNewSelectedFilesChange);
         this.selectedFilesListView.setItems(selectedFiles);
         // Turn on multiple selection
-        this.selectedFilesListView.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.MULTIPLE);
+        this.selectedFilesListView.getSelectionModel().setAllowsMultipleSelection(true);
 
         this.newNameTextField.textProperty().addListener((observable, oldValue, newValue) -> onTextFieldChange());
     }

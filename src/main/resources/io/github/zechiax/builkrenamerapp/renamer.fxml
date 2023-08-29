@@ -1,40 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/16"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="io.github.zechiax.builkrenamerapp.RenamerController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="448.0" prefWidth="678.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.zechiax.builkrenamerapp.RenamerController">
 
     <!-- Title Label -->
-    <Label text="Bulk Renaming App" style="-fx-font-size: 18px; -fx-font-weight: bold;" AnchorPane.leftAnchor="250" AnchorPane.topAnchor="20" />
+    <Label alignment="CENTER" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Bulk Renaming App" AnchorPane.leftAnchor="250" AnchorPane.topAnchor="20" />
 
     <!-- Left VBox -->
-    <VBox spacing="5" AnchorPane.leftAnchor="50" AnchorPane.topAnchor="60" AnchorPane.bottomAnchor="60">
+    <VBox spacing="5" AnchorPane.bottomAnchor="60" AnchorPane.leftAnchor="50" AnchorPane.topAnchor="60">
         <Label text="Selected Files:" />
-        <ListView fx:id="selectedFilesListView" VBox.vgrow="ALWAYS" />
+        <MFXListView fx:id="selectedFilesListView" VBox.vgrow="ALWAYS" />
     </VBox>
 
     <!-- Right VBox -->
-    <VBox spacing="5" AnchorPane.rightAnchor="50" AnchorPane.topAnchor="60" AnchorPane.bottomAnchor="20" >
+    <VBox spacing="5" AnchorPane.bottomAnchor="20" AnchorPane.rightAnchor="50" AnchorPane.topAnchor="60">
         <Label text="New Name:" />
-        <ListView fx:id="renamedFilesListView" VBox.vgrow="ALWAYS" />
-        <TextField fx:id="newNameTextField" />
-        <Button text="Rename" fx:id="renameButton" />
+        <MFXListView fx:id="renamedFilesListView" prefHeight="276.0" prefWidth="209.0" VBox.vgrow="ALWAYS" />
     </VBox>
 
     <!-- Bottom Buttons -->
     <HBox spacing="10" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="50" AnchorPane.rightAnchor="150">
-        <Button text="Add Files" fx:id="addFilesButton" />
-        <Button text="Remove Selected" fx:id="removeSelectedButton" />
-        <Button text="Clear All" fx:id="clearAllButton" />
+        <MFXButton fx:id="addFilesButton" text="Add Files" />
+        <MFXButton fx:id="removeSelectedButton" text="Remove Selected" />
+        <MFXButton fx:id="clearAllButton" text="Clear All" />
+        <MFXTextField fx:id="newNameTextField" maxWidth="Infinity" VBox.vgrow="ALWAYS" text="[N]" />
     </HBox>
+     <MFXButton fx:id="renameButton" layoutX="300.0" layoutY="213.0" text="Rename" />
 
 </AnchorPane>
