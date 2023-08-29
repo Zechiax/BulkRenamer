@@ -10,9 +10,8 @@
     <Label alignment="CENTER" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Bulk Renaming App" AnchorPane.leftAnchor="250" AnchorPane.topAnchor="20" />
 
     <!-- Left VBox -->
-    <VBox spacing="5" AnchorPane.bottomAnchor="60" AnchorPane.leftAnchor="50" AnchorPane.topAnchor="60">
-        <Label text="Selected Files:" />
-        <ListView fx:id="selectedFilesListView" VBox.vgrow="ALWAYS" />
+    <VBox spacing="5" AnchorPane.bottomAnchor="60" AnchorPane.leftAnchor="50" AnchorPane.topAnchor="60" AnchorPane.rightAnchor="60">
+
         <TableView fx:id="selectedFilesTableView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="oldNameColumn" text="Old Name" />
@@ -25,12 +24,6 @@
         </TableView>
     </VBox>
 
-    <!-- Right VBox -->
-    <VBox spacing="5" AnchorPane.bottomAnchor="20" AnchorPane.rightAnchor="50" AnchorPane.topAnchor="60">
-        <Label text="New Name:" />
-        <ListView fx:id="renamedFilesListView" prefHeight="276.0" prefWidth="209.0" VBox.vgrow="ALWAYS" />
-    </VBox>
-
     <!-- Bottom Buttons -->
     <HBox spacing="10" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="50" AnchorPane.rightAnchor="150">
         <Button fx:id="addFilesButton" text="Add Files" />
@@ -38,7 +31,7 @@
         <Button fx:id="clearAllButton" text="Clear All" />
         <TextField fx:id="newNameTextField" maxWidth="Infinity" VBox.vgrow="ALWAYS" text="[N].[E]" />
     </HBox>
-     <Button fx:id="renameButton" layoutX="300.0" layoutY="213.0" text="Rename" />
+     <!--<Button fx:id="renameButton" layoutX="300.0" layoutY="213.0" text="Rename" />-->
 
 
 </AnchorPane>

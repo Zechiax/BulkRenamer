@@ -68,6 +68,11 @@ public class RenameManager {
 
         for(var plugin: plugins) {
             var context = new RenameContext(oneFile, currentNames, mask);
+
+            if (plugin instanceof RenamePluginBase) {
+                ((RenamePluginBase) plugin).setContext(context);
+            }
+
             currentNames = plugin.rename(context);
         }
 

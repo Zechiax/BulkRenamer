@@ -23,15 +23,11 @@ public class RenamerController {
     private final System.Logger logger = System.getLogger(RenamerController.class.getName());
     @FXML
     public Button addFilesButton;
-    @FXML
-    public ListView<FileToRename> selectedFilesListView;
     private final ObservableList<FileToRename> selectedFiles = FXCollections.observableArrayList();
     @FXML
     public Button removeSelectedButton;
     @FXML
     public Button clearAllButton;
-    @FXML
-    public ListView<String> renamedFilesListView;
     @FXML
     public TextField newNameTextField;
 
@@ -51,10 +47,10 @@ public class RenamerController {
 
     public RenamerController() {
         this.fileManager = new RenameManager(this.selectedFiles);
-        setupTableView();
+        updateTableView();
     }
 
-    private void setupTableView() {
+    private void updateTableView() {
         selectedFilesTableView.setItems(selectedFiles);
         oldNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
         newNameColumn.setCellValueFactory(cellData -> {
@@ -99,8 +95,7 @@ public class RenamerController {
         logger.log(DEBUG, "Files added to list");
 
 
-        updateRenamedFilesListView();
-        setupTableView();
+        updateTableView();
     }
 
     private void onNewSelectedFilesChange(ListChangeListener.Change<? extends File> change) {
@@ -109,34 +104,27 @@ public class RenamerController {
 
     private void onRemoveSelectedButtonClick(ActionEvent actionEvent) {
         logger.log(INFO, "Remove selected button clicked");
-        var selectedItems = this.selectedFilesListView.getSelectionModel().getSelectedItems();
+        var selectedItems = this.selectedFilesTableView.getSelectionModel().getSelectedItems();
         logger.log(DEBUG, "Selected items: " + selectedItems.size());
 
         this.selectedFiles.removeAll(selectedItems);
         logger.log(DEBUG, "Selected items removed from list");
 
         // We clear the selection
-        this.selectedFilesListView.getSelectionModel().clearSelection();
+        this.selectedFilesTableView.getSelectionModel().clearSelection();
 
-        updateRenamedFilesListView();
+        updateTableView();
     }
 
     private void onClearAllButtonClick(ActionEvent actionEvent) {
         logger.log(INFO, "Clear all button clicked");
         this.selectedFiles.clear();
 
-        updateRenamedFilesListView();
+        updateTableView();
     }
 
     private void onTextFieldChange() {
-        updateRenamedFilesListView();
-    }
-
-    private void updateRenamedFilesListView() {
-        var newName = this.newNameTextField.getText();
-        logger.log(DEBUG, "New name: " + newName);
-        var renamedFiles = this.fileManager.GetRenamedFiles(newName);
-        this.renamedFilesListView.setItems(FXCollections.observableArrayList(renamedFiles));
+        updateTableView();
     }
 
     public void setStageAndSetupListeners(Stage stage) {
@@ -152,9 +140,8 @@ public class RenamerController {
         this.clearAllButton.setOnAction(this::onClearAllButtonClick);
 
         this.selectedFiles.addListener(this::onNewSelectedFilesChange);
-        this.selectedFilesListView.setItems(selectedFiles);
         // Turn on multiple selection
-        this.selectedFilesListView.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.MULTIPLE);
+        this.selectedFilesTableView.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.MULTIPLE);
 
         this.newNameTextField.textProperty().addListener((observable, oldValue, newValue) -> onTextFieldChange());
     }
