@@ -13,6 +13,16 @@
     <VBox spacing="5" AnchorPane.bottomAnchor="60" AnchorPane.leftAnchor="50" AnchorPane.topAnchor="60">
         <Label text="Selected Files:" />
         <ListView fx:id="selectedFilesListView" VBox.vgrow="ALWAYS" />
+        <TableView fx:id="selectedFilesTableView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="oldNameColumn" text="Old Name" />
+                <TableColumn fx:id="newNameColumn" text="New Name" />
+                <!-- More detailed info -->
+                <TableColumn fx:id="fileSizeColumn" text="File Size" />
+                <TableColumn fx:id="dateModifiedColumn" text="Date Modified" />
+                <TableColumn fx:id="pathColumn" text="Path" />
+            </columns>
+        </TableView>
     </VBox>
 
     <!-- Right VBox -->
@@ -29,5 +39,6 @@
         <TextField fx:id="newNameTextField" maxWidth="Infinity" VBox.vgrow="ALWAYS" text="[N].[E]" />
     </HBox>
      <Button fx:id="renameButton" layoutX="300.0" layoutY="213.0" text="Rename" />
+
 
 </AnchorPane>

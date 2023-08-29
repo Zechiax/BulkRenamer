@@ -3,14 +3,13 @@ package io.github.zechiax.builkrenamerapp;
 import io.github.zechiax.builkrenamerapp.core.FileToRename;
 import io.github.zechiax.builkrenamerapp.core.RenameManager;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -35,10 +34,51 @@ public class RenamerController {
     public ListView<String> renamedFilesListView;
     @FXML
     public TextField newNameTextField;
+
+    @FXML
+    public TableView<FileToRename> selectedFilesTableView = new TableView<>();
+    @FXML
+    public TableColumn<FileToRename, String> oldNameColumn = new TableColumn<>();
+    @FXML
+    public TableColumn<FileToRename, String> newNameColumn = new TableColumn<>();
+    @FXML
+    public TableColumn<FileToRename, String> fileSizeColumn = new TableColumn<>();
+    public TableColumn<FileToRename, String> dateModifiedColumn = new TableColumn<>();
+    @FXML
+    public TableColumn<FileToRename, String> pathColumn = new TableColumn<>();
+    @FXML
     private Stage stage;
 
     public RenamerController() {
         this.fileManager = new RenameManager(this.selectedFiles);
+        setupTableView();
+    }
+
+    private void setupTableView() {
+        selectedFilesTableView.setItems(selectedFiles);
+        oldNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+        newNameColumn.setCellValueFactory(cellData -> {
+            var file = cellData.getValue();
+            var newName = fileManager.getRenamedFile(newNameTextField.getText(), file);
+            return new SimpleStringProperty(newName);
+        });
+        fileSizeColumn.setCellValueFactory(cellData -> {
+            var file = cellData.getValue();
+            var size = file.length();
+            return new SimpleStringProperty(Long.toString(size));
+        });
+        dateModifiedColumn.setCellValueFactory(cellData -> {
+            var file = cellData.getValue();
+            var date = file.lastModified();
+            return new SimpleStringProperty(Long.toString(date));
+        });
+        pathColumn.setCellValueFactory(cellData -> {
+            var file = cellData.getValue();
+            var path = file.getAbsolutePath();
+            return new SimpleStringProperty(path);
+        });
+
+        selectedFilesTableView.refresh();
     }
 
     @FXML protected void onAddFilesButtonClick() {
@@ -56,8 +96,11 @@ public class RenamerController {
 
         logger.log(INFO, "Files selected: " + files.size());
         this.selectedFiles.addAll(FileToRename.convertToFilesToRename(files));
+        logger.log(DEBUG, "Files added to list");
+
 
         updateRenamedFilesListView();
+        setupTableView();
     }
 
     private void onNewSelectedFilesChange(ListChangeListener.Change<? extends File> change) {

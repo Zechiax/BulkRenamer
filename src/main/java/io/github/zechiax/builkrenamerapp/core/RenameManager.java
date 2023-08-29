@@ -2,6 +2,7 @@ package io.github.zechiax.builkrenamerapp.core;
 
 import io.github.zechiax.builkrenamerapp.plugins.ExtensionMask;
 import io.github.zechiax.builkrenamerapp.plugins.NameMask;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
@@ -55,5 +56,21 @@ public class RenameManager {
         }
 
         return currentNames;
+    }
+
+    public String getRenamedFile(String mask, FileToRename file) {
+        var currentNames = new ArrayList<String>();
+        currentNames.add(mask);
+
+        ObservableList<FileToRename> oneFile = FXCollections.observableArrayList();
+        oneFile.add(file);
+        currentNames.add(mask);
+
+        for(var plugin: plugins) {
+            var context = new RenameContext(oneFile, currentNames, mask);
+            currentNames = plugin.rename(context);
+        }
+
+        return currentNames.get(0);
     }
 }
