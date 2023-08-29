@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -19,7 +20,7 @@ import static java.lang.System.Logger.Level.DEBUG;
 import static java.lang.System.Logger.Level.INFO;
 
 public class RenamerController {
-    private final RenameManager fileManager = new RenameManager();
+    private final RenameManager fileManager;
     private final System.Logger logger = System.getLogger(RenamerController.class.getName());
     @FXML
     public Button addFilesButton;
@@ -31,19 +32,25 @@ public class RenamerController {
     @FXML
     public Button clearAllButton;
     @FXML
-    public ListView renamedFilesListView;
+    public ListView<String> renamedFilesListView;
+    @FXML
+    public TextField newNameTextField;
     private Stage stage;
 
+    public RenamerController() {
+        this.fileManager = new RenameManager(this.selectedFiles);
+    }
+
     @FXML protected void onAddFilesButtonClick() {
-        logger.log(INFO, "Add files button clicked");
+        logger.log(INFO, "Add originalFiles button clicked");
 
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select files to rename");
+        fileChooser.setTitle("Select originalFiles to rename");
 
         var files = fileChooser.showOpenMultipleDialog(stage);
 
         if (files == null) {
-            logger.log(INFO, "No files selected");
+            logger.log(INFO, "No originalFiles selected");
             return;
         }
 
@@ -52,7 +59,7 @@ public class RenamerController {
     }
 
     private void onNewSelectedFilesChange(ListChangeListener.Change<? extends File> change) {
-        logger.log(INFO, "Selected files changed");
+        logger.log(INFO, "Selected originalFiles changed");
     }
 
     private void onRemoveSelectedButtonClick(ActionEvent actionEvent) {
@@ -65,6 +72,14 @@ public class RenamerController {
     private void onClearAllButtonClick(ActionEvent actionEvent) {
         logger.log(INFO, "Clear all button clicked");
         this.selectedFiles.clear();
+    }
+
+    private void onTextFieldChange() {
+        logger.log(INFO, "Text field changed");
+        var newName = this.newNameTextField.getText();
+        logger.log(DEBUG, "New name: " + newName);
+        var renamedFiles = this.fileManager.GetRenamedFiles(newName);
+        this.renamedFilesListView.setItems(FXCollections.observableArrayList(renamedFiles));
     }
 
     public void setStageAndSetupListeners(Stage stage) {
@@ -84,5 +99,6 @@ public class RenamerController {
         // Turn on multiple selection
         this.selectedFilesListView.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.MULTIPLE);
 
+        this.newNameTextField.textProperty().addListener((observable, oldValue, newValue) -> onTextFieldChange());
     }
 }

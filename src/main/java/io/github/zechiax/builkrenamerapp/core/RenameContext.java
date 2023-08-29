@@ -1,4 +1,8 @@
 package io.github.zechiax.builkrenamerapp.core;
 
-public record RenameContext(FileToRename[] files, String mask) {
+import javafx.collections.ObservableList;
+
+import java.util.ArrayList;
+
+public record RenameContext(ObservableList<FileToRename> originalFiles, ArrayList<String> currentNames, String mask) {
 }
