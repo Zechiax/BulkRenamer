@@ -33,11 +33,11 @@
                     <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
                 </rowConstraints>
                 <Label text="First Number:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                <Label text="Increment:" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                <Label text="Cipher Count:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                <Label text="Step:" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                <Label text="Padding:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
                 <TextField fx:id="firstNumberTextField" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                <TextField fx:id="incrementTextField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                <TextField fx:id="cipherCountTextField" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                <TextField fx:id="stepTextField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <TextField fx:id="paddingTextField" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
             </GridPane>
             <HBox spacing="10">
                 <Button fx:id="addFilesButton" text="Add Files" />

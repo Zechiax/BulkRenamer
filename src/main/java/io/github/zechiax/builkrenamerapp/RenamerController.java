@@ -4,6 +4,7 @@ import io.github.zechiax.builkrenamerapp.core.FileToRename;
 import io.github.zechiax.builkrenamerapp.core.RenameManager;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -30,7 +31,6 @@ public class RenamerController {
     public Button clearAllButton;
     @FXML
     public TextField newNameTextField;
-
     @FXML
     public TableView<FileToRename> selectedFilesTableView = new TableView<>();
     @FXML
@@ -42,6 +42,12 @@ public class RenamerController {
     public TableColumn<FileToRename, String> dateModifiedColumn = new TableColumn<>();
     @FXML
     public TableColumn<FileToRename, String> pathColumn = new TableColumn<>();
+    @FXML
+    public TextField firstNumberTextField;
+    @FXML
+    public TextField stepTextField;
+    @FXML
+    public TextField paddingTextField;
     @FXML
     private Stage stage;
 
@@ -125,7 +131,30 @@ public class RenamerController {
         updateTableView();
     }
 
-    private void onTextFieldChange() {
+    private void counterTextFieldChange(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+        if (oldValue.equals(newValue)) {
+            // No change
+            return;
+        }
+
+        if (newValue.isEmpty()) {
+            // Empty string, user is probably deleting the text to input a new value
+            return;
+        }
+
+        var start = Integer.parseInt(firstNumberTextField.getText());
+        var step = Integer.parseInt(stepTextField.getText());
+        var padding = Integer.parseInt(paddingTextField.getText());
+
+        fileManager.setCounterSettings(start, step, padding);
+    }
+
+    private void onTextFieldChange(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+        if (oldValue.equals(newValue)) {
+            // No change
+            return;
+        }
+
         updateTableView();
     }
 
@@ -145,6 +174,17 @@ public class RenamerController {
         // Turn on multiple selection
         this.selectedFilesTableView.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.MULTIPLE);
 
-        this.newNameTextField.textProperty().addListener((observable, oldValue, newValue) -> onTextFieldChange());
+        this.newNameTextField.textProperty().addListener(this::onTextFieldChange);
+
+        var counterSettings = fileManager.getCounterSettings();
+
+        this.firstNumberTextField.setText(Integer.toString(counterSettings.getStart()));
+        this.stepTextField.setText(Integer.toString(counterSettings.getStep()));
+        this.paddingTextField.setText(Integer.toString(counterSettings.getPadding()));
+
+        // Counter settings
+        this.firstNumberTextField.textProperty().addListener(this::counterTextFieldChange);
+        this.stepTextField.textProperty().addListener(this::counterTextFieldChange);
+        this.paddingTextField.textProperty().addListener(this::counterTextFieldChange);
     }
 }

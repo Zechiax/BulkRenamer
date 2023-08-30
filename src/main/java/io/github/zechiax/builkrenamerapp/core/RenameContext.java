@@ -4,5 +4,5 @@ import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
-public record RenameContext(String currentName, FileToRename currentFile, int originalFilesIndex, ObservableList<FileToRename> originalFiles, String mask) {
+public record RenameContext(String currentName, FileToRename currentFile, int originalFilesIndex, ObservableList<FileToRename> originalFiles, String mask, CounterSettings counterSettings) {
 }

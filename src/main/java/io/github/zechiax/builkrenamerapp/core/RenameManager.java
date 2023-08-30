@@ -14,6 +14,8 @@ public class RenameManager {
     private static final Logger logger = Logger.getLogger(RenameManager.class.getName());
     private final ArrayList<RenamePlugin> plugins;
     private final ObservableList<FileToRename> files;
+    private final CounterSettings counterSettings = CounterSettings.getDefault();
+
     public RenameManager(ObservableList<FileToRename> files) {
         this.files = files;
         plugins = new ArrayList<>();
@@ -37,6 +39,16 @@ public class RenameManager {
         plugins.add(new NameRangeMask());
         plugins.add(new ExtensionMask());
         plugins.add(new ExtensionRangeMask());
+    }
+
+    public void setCounterSettings(Integer start, Integer step, Integer padding) {
+        counterSettings.setStart(start);
+        counterSettings.setStep(step);
+        counterSettings.setPadding(padding);
+    }
+
+    public CounterSettings getCounterSettings() {
+        return counterSettings;
     }
 
     public ArrayList<String> getRenamedFiles(String mask) {
@@ -70,7 +82,7 @@ public class RenameManager {
         var newName = mask;
 
         for (var plugin : plugins) {
-            var context = new RenameContext(newName, file, index, files, mask);
+            var context = new RenameContext(newName, file, index, files, mask, counterSettings);
 
             if (plugin instanceof RenamePluginBase) {
                 ((RenamePluginBase) plugin).setContext(context);
