@@ -1,6 +1,7 @@
 package io.github.zechiax.builkrenamerapp;
 
 import io.github.zechiax.builkrenamerapp.core.FileToRename;
+import io.github.zechiax.builkrenamerapp.core.Helpers.FileSizeConverter;
 import io.github.zechiax.builkrenamerapp.core.RenameManager;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -15,9 +16,11 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
 
-import static java.lang.System.Logger.Level.DEBUG;
-import static java.lang.System.Logger.Level.INFO;
+import static java.lang.System.Logger.Level.*;
 
 public class RenamerController {
     private final RenameManager fileManager;
@@ -69,12 +72,23 @@ public class RenamerController {
         fileSizeColumn.setCellValueFactory(cellData -> {
             var file = cellData.getValue();
             var size = file.length();
-            return new SimpleStringProperty(Long.toString(size));
+
+            var text = FileSizeConverter.getFormattedSizeFromBytes(size);
+
+            return new SimpleStringProperty(text);
         });
         dateModifiedColumn.setCellValueFactory(cellData -> {
             var file = cellData.getValue();
-            var date = file.lastModified();
-            return new SimpleStringProperty(Long.toString(date));
+
+            try {
+                var date = file.getFileAttributeView().lastModifiedTime().toInstant();
+                var text = DateTimeFormatter.ISO_INSTANT.format(date);
+
+                return new SimpleStringProperty(text);
+            } catch (IOException e) {
+                logger.log(ERROR, "Error getting last modified time", e);
+                return new SimpleStringProperty("Error");
+            }
         });
         pathColumn.setCellValueFactory(cellData -> {
             var file = cellData.getValue();

@@ -3,6 +3,9 @@ package io.github.zechiax.builkrenamerapp.core;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -27,6 +30,10 @@ public class FileToRename extends File {
 
     public String getBaseName() {
         return FilenameUtils.getBaseName(this.getAbsolutePath());
+    }
+
+    public BasicFileAttributes getFileAttributeView() throws IOException {
+        return Files.readAttributes(this.toPath(), BasicFileAttributes.class);
     }
 
     public String getExtension() {

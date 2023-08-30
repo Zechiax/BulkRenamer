@@ -6,7 +6,7 @@ import io.github.zechiax.builkrenamerapp.core.RenamingException;
 import java.util.regex.Pattern;
 
 public class ExtensionRangeMask extends RangePluginBase {
-    private final String pattern = "(\\[E(\\d+)-(\\d+)\\])";
+    private final String pattern = "(\\[E(\\d+)-(\\d+)?\\])";
     private final Pattern patternRegex = Pattern.compile(pattern);
     @Override
     public String getName() {
@@ -30,13 +30,19 @@ public class ExtensionRangeMask extends RangePluginBase {
             var extension = context.currentFile().getExtension();
 
             var start = Integer.parseInt(group.split("-")[0].replace("[E", ""));
-            var end = Integer.parseInt(group.split("-")[1].replace("]", ""));
+            var endString = group.split("-")[1].replace("]", "");
+
+            if (endString.isEmpty()) {
+                endString = String.valueOf(extension.length());
+            }
+
+            var end = Integer.parseInt(endString);
 
             if (!isStartEndValid(start, end, extension.length())) {
                 throw new RenamingException("Start and end are not valid");
             }
 
-            newName = replaceSubstring(newName, extension.substring(start, end), indices[0], indices[0] + group.length());
+            newName = replaceSubstring(newName, extension.substring(start - 1, end), indices[0], indices[0] + group.length());
         }
 
         return newName;

@@ -17,7 +17,7 @@ public class BulkRenamerApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(BulkRenamerApp.class.getResource("renamer.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 640, 480);
+        Scene scene = new Scene(fxmlLoader.load(), 860, 480);
         MFXThemeManager.addOn(scene, Themes.DEFAULT, Themes.LEGACY);
 
         RenamerController renamerController = fxmlLoader.getController();
