@@ -147,6 +147,8 @@ public class RenamerController {
         var padding = Integer.parseInt(paddingTextField.getText());
 
         fileManager.setCounterSettings(start, step, padding);
+
+        updateTableView();
     }
 
     private void onTextFieldChange(ObservableValue<? extends String> observable, String oldValue, String newValue) {
