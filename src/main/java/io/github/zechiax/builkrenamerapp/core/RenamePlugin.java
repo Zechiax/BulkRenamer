@@ -4,5 +4,5 @@ import java.util.ArrayList;
 
 public interface RenamePlugin {
     public String getName();
-    public String rename(RenameContext context);
+    public String rename(RenameContext context) throws RenamingException;
 }

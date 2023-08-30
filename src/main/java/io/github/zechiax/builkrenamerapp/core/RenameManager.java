@@ -1,7 +1,9 @@
 package io.github.zechiax.builkrenamerapp.core;
 
 import io.github.zechiax.builkrenamerapp.plugins.ExtensionMask;
+import io.github.zechiax.builkrenamerapp.plugins.ExtensionRangeMask;
 import io.github.zechiax.builkrenamerapp.plugins.NameMask;
+import io.github.zechiax.builkrenamerapp.plugins.NameRangeMask;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -32,7 +34,9 @@ public class RenameManager {
 
     public void LoadDefaultPlugins() {
         plugins.add(new NameMask());
+        plugins.add(new NameRangeMask());
         plugins.add(new ExtensionMask());
+        plugins.add(new ExtensionRangeMask());
     }
 
     public ArrayList<String> getRenamedFiles(String mask) {
@@ -72,7 +76,13 @@ public class RenameManager {
                 ((RenamePluginBase) plugin).setContext(context);
             }
 
-            newName = plugin.rename(context);
+            try {
+                newName = plugin.rename(context);
+            } catch (RenamingException e) {
+                logger.warning("Plugin " + plugin.getName() + " threw an exception: " + e.getMessage());
+                newName = "<Error!>";
+            }
+
         }
 
         return newName;

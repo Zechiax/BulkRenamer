@@ -4,9 +4,13 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.function.BinaryOperator;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
 
 public abstract class RenamePluginBase implements RenamePlugin {
+    protected final Logger logger = Logger.getLogger(this.getClass().getName());
     private final String name = this.getClass().getSimpleName();
     protected RenameContext context;
     @Override
@@ -58,5 +62,22 @@ public abstract class RenamePluginBase implements RenamePlugin {
 
     protected String replaceSubstring(@NotNull String string, String replacement, int start, int end) {
         return string.substring(0, start) + replacement + string.substring(end);
+    }
+
+    protected static ArrayList<String> getGroupsFromMatcher(Matcher matcher, boolean reverseList) {
+        var groups = new ArrayList<String>();
+
+        while (matcher.find()) {
+            groups.add(matcher.group());
+        }
+
+        if (reverseList) {
+            var groupsArray = groups.toArray(new String[0]);
+            ArrayUtils.reverse(groupsArray);
+            groups = new ArrayList<>(groupsArray.length);
+            Collections.addAll(groups, groupsArray);
+        }
+
+        return groups;
     }
 }
