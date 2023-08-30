@@ -52,6 +52,8 @@ public class RenamerController {
 
     private void updateTableView() {
         selectedFilesTableView.setItems(selectedFiles);
+        selectedFilesTableView.columnResizePolicyProperty().set(TableView.CONSTRAINED_RESIZE_POLICY_SUBSEQUENT_COLUMNS);
+
         oldNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
         newNameColumn.setCellValueFactory(cellData -> {
             var file = cellData.getValue();
