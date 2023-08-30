@@ -35,7 +35,7 @@ public class RenameManager {
         plugins.add(new ExtensionMask());
     }
 
-    public ArrayList<String> GetRenamedFiles(String mask) {
+    public ArrayList<String> getRenamedFiles(String mask) {
         logger.info("Renaming files with mask: " + mask);
         var currentNames = new ArrayList<String>();
         for (var ignored : files) {
@@ -44,38 +44,37 @@ public class RenameManager {
 
         logger.info("Active plugins:" + plugins.size());
         for (var plugin : plugins) {
-            logger.info("Using plugin: " + plugin.getName());
-            var context = new RenameContext(files, currentNames, mask);
-
-            // If the plugin extends RenamePluginBase, set the context
-            if (plugin instanceof RenamePluginBase) {
-                ((RenamePluginBase) plugin).setContext(context);
+            logger.info("Plugin: " + plugin.getName());
+            for (var i = 0; i < files.size(); i++) {
+                var name = getRenamedFile(currentNames.get(i), files.get(i));
+                currentNames.set(i, name);
             }
-
-            currentNames = plugin.rename(context);
         }
 
         return currentNames;
     }
 
     public String getRenamedFile(String mask, FileToRename file) {
-        var currentNames = new ArrayList<String>();
-        currentNames.add(mask);
 
-        ObservableList<FileToRename> oneFile = FXCollections.observableArrayList();
-        oneFile.add(file);
-        currentNames.add(mask);
+        // Index of the file in the list
+        var index = files.indexOf(file);
 
-        for(var plugin: plugins) {
-            var context = new RenameContext(oneFile, currentNames, mask);
+        if (index == -1) {
+            throw new IllegalArgumentException("File not found in list");
+        }
+
+        var newName = mask;
+
+        for (var plugin : plugins) {
+            var context = new RenameContext(newName, file, index, files, mask);
 
             if (plugin instanceof RenamePluginBase) {
                 ((RenamePluginBase) plugin).setContext(context);
             }
 
-            currentNames = plugin.rename(context);
+            newName = plugin.rename(context);
         }
 
-        return currentNames.get(0);
+        return newName;
     }
 }

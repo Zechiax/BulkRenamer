@@ -14,28 +14,21 @@ public class NameMask extends RenamePluginBase {
     }
 
     @Override
-    public ArrayList<String> rename(RenameContext context) {
+    public String rename(RenameContext context) {
         if (!isPatternInMask(pattern)) {
-            return context.currentNames();
+            return context.currentName();
         }
 
-        var files = context.originalFiles();
+        var file = context.currentFile();
+        var newName = context.currentName();
 
-        var newNames = new ArrayList<String>(files.size());
+        var indices = getPatternIndices(pattern, newName);
 
-        for (int i = 0; i < files.size(); i++) {
-            var file = files.get(i);
-            var newName = context.currentNames().get(i);
-
-            var indices = getPatternIndices(pattern, newName);
-
-            for (var index : indices) {
-                // On the index, we replace the pattern with the file name
-                newName = replaceSubstring(newName, file.getBaseName(), index, index + pattern.length());
-            }
-            newNames.add(i, newName);
+        for (var index : indices) {
+            // On the index, we replace the pattern with the file name
+            newName = replaceSubstring(newName, file.getBaseName(), index, index + pattern.length());
         }
 
-        return newNames;
+        return newName;
     }
 }
