@@ -14,8 +14,6 @@ public class CounterMask extends RenamePluginBase {
     private String getStringCountFromContext(RenameContext context) {
         var counterSettings = context.counterSettings();
 
-        // This would be the position of the current file in the original files list, starting from 0
-        // That's why I add +1
         var position = context.originalFilesIndex();
 
         var step = counterSettings.getStep();
