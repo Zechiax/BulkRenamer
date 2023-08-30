@@ -6,18 +6,35 @@
 <AnchorPane prefHeight="508.0" prefWidth="689.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.zechiax.builkrenamerapp.RenamerController">
     <!-- Left VBox -->
     <VBox spacing="10" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="30" AnchorPane.rightAnchor="30" AnchorPane.topAnchor="20">
-        <VBox spacing="5" VBox.vgrow="ALWAYS">
-        <Label alignment="CENTER" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Bulk Renaming App" AnchorPane.leftAnchor="250" AnchorPane.topAnchor="20" />
-            <TableView fx:id="selectedFilesTableView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-                <columns>
-                    <TableColumn fx:id="oldNameColumn" text="Old Name" />
-                    <TableColumn fx:id="newNameColumn" text="New Name" />
-                    <!-- More detailed info -->
-                    <TableColumn fx:id="fileSizeColumn" text="File Size" />
-                    <TableColumn fx:id="dateModifiedColumn" text="Date Modified" />
-                    <TableColumn fx:id="pathColumn" text="Path" />
-                </columns>
-            </TableView>
+        <VBox VBox.vgrow="ALWAYS">
+            <Label alignment="CENTER" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Bulk Renaming App" AnchorPane.leftAnchor="250" AnchorPane.topAnchor="20" />
+            <HBox spacing="5" VBox.vgrow="ALWAYS">
+                <VBox HBox.hgrow="ALWAYS">
+                    <TableView fx:id="selectedFilesTableView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="indexColumn" text="#" />
+                            <TableColumn fx:id="oldNameColumn" text="Old Name" />
+                            <TableColumn fx:id="newNameColumn" text="New Name" />
+                            <!-- More detailed info -->
+                            <TableColumn fx:id="fileSizeColumn" text="File Size" />
+                            <TableColumn fx:id="dateModifiedColumn" text="Date Modified" />
+                            <TableColumn fx:id="pathColumn" text="Path" />
+                        </columns>
+                    </TableView>
+                </VBox>
+                <VBox spacing="10">
+                    <Button fx:id="moveUpButton" mnemonicParsing="false" VBox.vgrow="ALWAYS" maxHeight="Infinity">
+                        <graphic>
+                            <Label text="↑" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+                        </graphic>
+                    </Button>
+                    <Button fx:id="moveDownButton" mnemonicParsing="false" VBox.vgrow="ALWAYS" maxHeight="Infinity">
+                        <graphic>
+                            <Label text="↓" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+                        </graphic>
+                    </Button>
+                </VBox>
+            </HBox>
         </VBox>
 
         <!-- Bottom Buttons -->
