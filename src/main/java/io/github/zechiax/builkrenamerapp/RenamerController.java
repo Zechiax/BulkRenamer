@@ -61,11 +61,20 @@ public class RenamerController {
     @FXML
     public Button moveDownButton;
     @FXML
+    public TextField newExtensionTextField;
+    @FXML
     private Stage stage;
 
     public RenamerController() {
         this.fileManager = new RenameManager(this.selectedFiles);
         updateTableView();
+    }
+
+    private String getNewName() {
+        var newName = newNameTextField.getText();
+        var extension = newExtensionTextField.getText();
+
+        return newName + "." + extension;
     }
 
     private void updateTableView() {
@@ -75,7 +84,7 @@ public class RenamerController {
         oldNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
         newNameColumn.setCellValueFactory(cellData -> {
             var file = cellData.getValue();
-            var newName = fileManager.getRenamedFile(newNameTextField.getText(), file);
+            var newName = fileManager.getRenamedFile(getNewName(), file);
             return new SimpleStringProperty(newName);
         });
         fileSizeColumn.setCellValueFactory(cellData -> {
@@ -266,6 +275,7 @@ public class RenamerController {
         this.selectedFilesTableView.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.MULTIPLE);
 
         this.newNameTextField.textProperty().addListener(this::onTextFieldChange);
+        this.newExtensionTextField.textProperty().addListener(this::onTextFieldChange);
 
         var counterSettings = fileManager.getCounterSettings();
 
