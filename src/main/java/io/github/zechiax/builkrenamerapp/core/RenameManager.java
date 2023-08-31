@@ -37,6 +37,7 @@ public class RenameManager {
         plugins.add(new ExtensionMask());
         plugins.add(new ExtensionRangeMask());
         plugins.add(new CounterMask());
+        plugins.add(new DateMask());
     }
 
     public void setCounterSettings(Integer start, Integer step, Integer padding) {
