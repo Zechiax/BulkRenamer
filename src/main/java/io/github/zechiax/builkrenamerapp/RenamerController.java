@@ -63,6 +63,8 @@ public class RenamerController {
     @FXML
     public TextField newExtensionTextField;
     @FXML
+    public Button renameButton;
+    @FXML
     private Stage stage;
 
     public RenamerController() {
@@ -291,5 +293,32 @@ public class RenamerController {
         // Move buttons
         this.moveUpButton.setOnAction(this::onMoveUpButtonClick);
         this.moveDownButton.setOnAction(this::onMoveDownButtonClick);
+
+        // Rename button
+        this.renameButton.setOnAction(this::onRenameButtonClick);
+    }
+
+    private void onRenameButtonClick(ActionEvent actionEvent) {
+        var mask = getNewName();
+
+        try {
+            fileManager.renameFiles(mask);
+        } catch (IOException e) {
+            logger.log(ERROR, "Error renaming files", e);
+            // We show error dialog
+            var alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error renaming files");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+
+        updateTableView();
+        var alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success");
+        var count = selectedFiles.size();
+        alert.setHeaderText("Successfully renamed " + count + " files");
+        alert.setContentText("The files have been renamed successfully");
+        alert.showAndWait();
     }
 }

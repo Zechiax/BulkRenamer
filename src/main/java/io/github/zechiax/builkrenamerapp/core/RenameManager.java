@@ -4,6 +4,7 @@ import io.github.zechiax.builkrenamerapp.plugins.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -97,5 +98,16 @@ public class RenameManager {
         }
 
         return newName;
+    }
+
+    public void renameFiles(String mask) throws IOException {
+        var names = getRenamedFiles(mask);
+
+        for (var i = 0; i < files.size(); i++) {
+            var file = files.get(i);
+            var name = names.get(i);
+
+            file.renameTo(name);
+        }
     }
 }

@@ -36,6 +36,10 @@ public class FileToRename extends File {
         return Files.readAttributes(this.toPath(), BasicFileAttributes.class);
     }
 
+    public void renameTo(String newName) throws IOException {
+        Files.move(this.toPath(), this.toPath().resolveSibling(newName));
+    }
+
     public String getExtension() {
         return FilenameUtils.getExtension(this.getAbsolutePath());
     }

@@ -70,11 +70,14 @@
                 <TextField fx:id="newNameTextField" maxWidth="Infinity" text="[N]" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
                 <TextField fx:id="newExtensionTextField" maxWidth="Infinity" text="[E]" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
             </GridPane>
-            <HBox spacing="10">
-                <Button fx:id="addFilesButton" text="Add Files" />
-                <Button fx:id="removeSelectedButton" text="Remove Selected" />
-                <Button fx:id="clearAllButton" text="Clear All" />
-            </HBox>
+            <ButtonBar>
+                <buttons>
+                    <Button fx:id="addFilesButton" text="Add Files" ButtonBar.buttonData="LEFT" />
+                    <Button fx:id="removeSelectedButton" text="Remove Selected" ButtonBar.buttonData="LEFT" />
+                    <Button fx:id="clearAllButton" text="Clear All" ButtonBar.buttonData="LEFT" />
+                    <Button fx:id="renameButton" text="Rename" ButtonBar.buttonData="RIGHT" />
+                </buttons>
+            </ButtonBar>
         </VBox>
     </VBox>
 
