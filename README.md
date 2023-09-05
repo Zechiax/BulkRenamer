@@ -6,6 +6,6 @@ An app for easy renaming of multiple files and folders
 
 ## How to use
 
-## Buil-in masks
+## Built-in masks
 
 ## Plugin interface
