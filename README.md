@@ -37,3 +37,5 @@ The flow of the app is as follows:
 - \[C] - Counter, settings is available in the interface, you can set the starting value, step and number of digits (padding)
 
 ## Plugin interface
+
+One can write own plugins/masks for the app. To do so, one needs to implement the `RenamePlugin` interface, optionally `RenamePluginBase` as it contains some helper methods.
