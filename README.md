@@ -1,6 +1,6 @@
 # Bulk Renamer
 
-An app for easy renaming of multiple files and folders
+An app for easy renaming of multiple files
 
 ## How to build and run
 
