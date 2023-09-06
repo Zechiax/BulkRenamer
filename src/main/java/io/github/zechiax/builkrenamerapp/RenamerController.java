@@ -121,9 +121,6 @@ public class RenamerController {
             return new SimpleStringProperty(Integer.toString(index));
         });
 
-        // Automatically resize the index column
-        //indexColumn.prefWidthProperty().bind(selectedFilesTableView.widthProperty().multiply(0.05));
-
         selectedFilesTableView.refresh();
     }
 
@@ -142,6 +139,10 @@ public class RenamerController {
 
         var files = new ArrayList<>(readonlyFiles);
 
+        newSelectedFiles(files);
+    }
+
+    private void newSelectedFiles(ArrayList<File> files) {
         // We remove the files that are already in the list
         files.removeIf(file -> {
             for (var selectedFile : selectedFiles) {
