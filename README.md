@@ -39,3 +39,7 @@ The flow of the app is as follows:
 ## Plugin interface
 
 One can write own plugins/masks for the app. To do so, one needs to implement the `RenamePlugin` interface, optionally `RenamePluginBase` as it contains some helper methods.
+
+## Images
+
+![Main window](images/interface.png)
