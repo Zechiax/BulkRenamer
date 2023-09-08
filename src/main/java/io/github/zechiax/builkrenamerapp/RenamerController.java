@@ -4,7 +4,6 @@ import io.github.zechiax.builkrenamerapp.core.FileToRename;
 import io.github.zechiax.builkrenamerapp.core.Helpers.FileSizeConverter;
 import io.github.zechiax.builkrenamerapp.core.RenameManager;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -13,13 +12,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -64,6 +61,10 @@ public class RenamerController {
     public TextField newExtensionTextField;
     @FXML
     public Button renameButton;
+    @FXML
+    public TextField findTextField;
+    @FXML
+    public TextField replaceTextField;
     @FXML
     private Stage stage;
 
@@ -261,6 +262,17 @@ public class RenamerController {
         updateTableView();
     }
 
+    private void onFindReplaceChanged(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+        if (oldValue.equals(newValue)) {
+            // No change
+            return;
+        }
+
+        fileManager.setFindReplace(findTextField.getText(), replaceTextField.getText());
+
+        updateTableView();
+    }
+
     public void setStageAndSetupListeners(Stage stage) {
         stage.setOnCloseRequest(event -> {
             logger.log(INFO, "Stage closed");
@@ -297,6 +309,10 @@ public class RenamerController {
 
         // Rename button
         this.renameButton.setOnAction(this::onRenameButtonClick);
+
+        // Find and replace
+        this.findTextField.textProperty().addListener(this::onFindReplaceChanged);
+        this.replaceTextField.textProperty().addListener(this::onFindReplaceChanged);
     }
 
     private void onRenameButtonClick(ActionEvent actionEvent) {

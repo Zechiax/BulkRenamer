@@ -1,7 +1,6 @@
 package io.github.zechiax.builkrenamerapp.core;
 
 import io.github.zechiax.builkrenamerapp.plugins.*;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.IOException;
@@ -13,6 +12,13 @@ public class RenameManager {
     private final ArrayList<RenamePlugin> plugins;
     private final ObservableList<FileToRename> files;
     private final CounterSettings counterSettings = CounterSettings.getDefault();
+    private String renameFind = "";
+    private String renameReplace = "";
+
+    public void setFindReplace(String findString, String replacementString) {
+        renameFind = findString;
+        renameReplace = replacementString;
+    }
 
     public RenameManager(ObservableList<FileToRename> files) {
         this.files = files;
@@ -97,7 +103,14 @@ public class RenameManager {
 
         }
 
+        // After applying all plugins, find and replace
+        newName = findAndReplace(newName);
+
         return newName;
+    }
+
+    private String findAndReplace(String name) {
+        return name.replace(renameFind, renameReplace);
     }
 
     public void renameFiles(String mask) throws IOException {
