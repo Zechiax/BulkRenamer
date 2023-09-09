@@ -9,7 +9,7 @@ An app for easy renaming of multiple files
 - Java 20
 - Maven
 
-## How to build
+## How to run
 
 To instantly run the app, run at the root of the project:
 
