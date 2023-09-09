@@ -22,11 +22,11 @@ mvn clean javafx:run
 The flow of the app is as follows:
 
 1. After opening the app, use the `Add files` button to add files to the list
-1. Select the files you want to rename and confirm, this will add them to the list of files
-1. Write mask for your files
-   2. Optionally, you can use the find and replace feature, that works on the result of the mask
-1. Click `Rename` to rename the files
-1. If everything went well, you will see a message about the successful renaming
+2. Select the files you want to rename and confirm, this will add them to the list of files
+3. Write mask for your files, in the New Name and New Extension fields, you can use the built-in masks, described in the next section.
+   1. Optionally, you can use the find and replace feature, that works on the result of the mask
+4. Click `Rename` to rename the files
+5. If everything went well, you will see a message about the successful renaming
 
 ## Built-in masks
 
