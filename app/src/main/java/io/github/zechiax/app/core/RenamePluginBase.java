@@ -11,22 +11,22 @@ import java.util.regex.Matcher;
 public abstract class RenamePluginBase implements RenamePlugin {
     protected final Logger logger = Logger.getLogger(this.getClass().getName());
     private final String name = this.getClass().getSimpleName();
-    protected RenameContext context;
+    protected PluginContext context;
     @Override
     public String getName() {
         return name;
     }
 
-    public void setContext(RenameContext context) {
+    public void setContext(PluginContext context) {
         this.context = context;
     }
 
-    public RenameContext getContext() {
+    public PluginContext getContext() {
         return context;
     }
 
     protected Integer[] getPatternIndices(String pattern) {
-        return getPatternIndices(pattern, context.mask());
+        return getPatternIndices(pattern, context.getMask());
     }
 
     protected Integer[] getPatternIndices(String pattern, @NotNull String mask) {
@@ -56,7 +56,7 @@ public abstract class RenamePluginBase implements RenamePlugin {
     }
 
     protected boolean isPatternInMask(String pattern) {
-        return context.mask().contains(pattern);
+        return context.getMask().contains(pattern);
     }
 
     protected String replaceSubstring(@NotNull String string, String replacement, int start, int end) {

@@ -1,6 +1,6 @@
 package io.github.zechiax.app.plugins;
 
-import io.github.zechiax.app.core.RenameContext;
+import io.github.zechiax.app.core.PluginContext;
 import io.github.zechiax.app.core.RenamingException;
 
 import java.util.regex.Pattern;
@@ -14,21 +14,21 @@ public class NameRangeMask extends RangePluginBase {
     }
 
     @Override
-    public String rename(RenameContext context) throws RenamingException {
+    public String rename(PluginContext context) throws RenamingException {
         // We match the pattern to the current name
-        var matcher = patternRegex.matcher(context.currentName());
+        var matcher = patternRegex.matcher(context.getCurrentName());
 
         var groups = getGroupsFromMatcher(matcher, true);
 
         if (groups.isEmpty()) {
-            return context.currentName();
+            return context.getCurrentName();
         }
 
-        var newName = context.currentName();
+        var newName = context.getCurrentName();
         for (var group : groups) {
             var indices = getPatternIndices(group, newName);
 
-            var baseName = context.currentFile().getBaseName();
+            var baseName = context.getCurrentFile().getBaseName();
 
             var start = Integer.parseInt(group.split("-")[0].replace("[N", ""));
             var endString = group.split("-")[1].replace("]", "");

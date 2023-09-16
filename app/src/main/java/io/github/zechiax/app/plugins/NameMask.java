@@ -1,6 +1,6 @@
 package io.github.zechiax.app.plugins;
 
-import io.github.zechiax.app.core.RenameContext;
+import io.github.zechiax.app.core.PluginContext;
 import io.github.zechiax.app.core.RenamePluginBase;
 
 public class NameMask extends RenamePluginBase {
@@ -12,13 +12,13 @@ public class NameMask extends RenamePluginBase {
     }
 
     @Override
-    public String rename(RenameContext context) {
+    public String rename(PluginContext context) {
         if (!isPatternInMask(pattern)) {
-            return context.currentName();
+            return context.getCurrentName();
         }
 
-        var file = context.currentFile();
-        var newName = context.currentName();
+        var file = context.getCurrentFile();
+        var newName = context.getCurrentName();
 
         var indices = getPatternIndices(pattern, newName);
 

@@ -1,6 +1,6 @@
 package io.github.zechiax.app.plugins;
 
-import io.github.zechiax.app.core.RenameContext;
+import io.github.zechiax.app.core.PluginContext;
 import io.github.zechiax.app.core.RenamePluginBase;
 
 public class CounterMask extends RenamePluginBase {
@@ -11,10 +11,10 @@ public class CounterMask extends RenamePluginBase {
         return "Counter Mask";
     }
 
-    private String getStringCountFromContext(RenameContext context) {
-        var counterSettings = context.counterSettings();
+    private String getStringCountFromContext(PluginContext context) {
+        var counterSettings = context.getCounterSettings();
 
-        var position = context.originalFilesIndex();
+        var position = context.getOriginalFilesIndex();
 
         var step = counterSettings.getStep();
         var start = counterSettings.getStart();
@@ -28,15 +28,15 @@ public class CounterMask extends RenamePluginBase {
     }
 
     @Override
-    public String rename(RenameContext context) {
-        var indices = getPatternIndices(pattern, context.currentName());
+    public String rename(PluginContext context) {
+        var indices = getPatternIndices(pattern, context.getCurrentName());
 
         var counter = getStringCountFromContext(context);
 
-        var newName = context.currentName();
+        var newName = context.getCurrentName();
 
         for (var index : indices) {
-            newName = replaceSubstring(context.currentName(), counter, index, index + pattern.length());
+            newName = replaceSubstring(context.getCurrentName(), counter, index, index + pattern.length());
         }
 
         return newName;
