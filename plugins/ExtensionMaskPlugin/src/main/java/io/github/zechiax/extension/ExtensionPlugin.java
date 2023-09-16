@@ -42,7 +42,7 @@ public class ExtensionPlugin extends Plugin {
     }
 
     @Extension
-    public class ExtensionRangeMask extends RangePluginBase {
+    public static class ExtensionRangeMask extends RangePluginBase {
         private final String pattern = "(\\[E(\\d+)-(\\d+)?\\])";
         private final Pattern patternRegex = Pattern.compile(pattern);
 

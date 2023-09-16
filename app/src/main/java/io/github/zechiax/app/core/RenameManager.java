@@ -1,7 +1,6 @@
 package io.github.zechiax.app.core;
 
 import io.github.zechiax.api.*;
-import io.github.zechiax.app.plugins.*;
 import javafx.collections.ObservableList;
 import org.pf4j.PluginManager;
 import org.slf4j.Logger;
@@ -27,7 +26,6 @@ public class RenameManager {
     public RenameManager(ObservableList<FileToRename> files) {
         this.files = files;
         plugins = new ArrayList<>();
-        LoadDefaultPlugins();
 
         logger.info("Loading plugins");
         pluginManager.loadPlugins();
@@ -45,13 +43,6 @@ public class RenameManager {
 
     public ArrayList<RenamePluginBase> GetPlugins() {
         return plugins;
-    }
-
-    public void LoadDefaultPlugins() {
-        plugins.add(new ExtensionMask());
-        plugins.add(new ExtensionRangeMask());
-        plugins.add(new CounterMask());
-        plugins.add(new DateMask());
     }
 
     public void setCounterSettings(Integer start, Integer step, Integer padding) {
