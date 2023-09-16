@@ -15,6 +15,7 @@
         <module>NameMaskPlugin</module>
         <module>ExtensionMaskPlugin</module>
         <module>DateMaskPlugin</module>
+        <module>CounterMask</module>
     </modules>
 
     <properties>

@@ -1,9 +1,13 @@
-package io.github.zechiax.app.plugins;
+package io.github.zechiax.counter;
 
 import io.github.zechiax.api.PluginContext;
 import io.github.zechiax.api.RenamePluginBase;
+import org.pf4j.Extension;
+import org.pf4j.Plugin;
 
-public class CounterMask extends RenamePluginBase {
+public class CounterPlugin extends Plugin {
+    @Extension
+    public static class CounterMask extends RenamePluginBase {
     private static final String pattern = "[C]";
 
     @Override
@@ -41,4 +45,5 @@ public class CounterMask extends RenamePluginBase {
 
         return newName;
     }
+}
 }
