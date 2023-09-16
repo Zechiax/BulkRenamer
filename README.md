@@ -63,7 +63,7 @@ The flow of the app is as follows:
 
 One can write own plugins/masks for the app.
 
-The program uses the [pf4j](https://github.com/pf4j/pf4j) library for plugin management.
+The program uses the [pf4j](https://github.com/pf4j/pf4j) framework for plugin management.
 
 The plugin interface is defined in the `api` module, if you wish to create your own plugin, I recommend adding a module under the `plugins` module, and follow the same structure as the built-in plugins.
 
