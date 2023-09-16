@@ -14,17 +14,17 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-import static java.lang.System.Logger.Level.*;
 
 public class RenamerController {
     private final RenameManager renameManager;
-    private final System.Logger logger = System.getLogger(RenamerController.class.getName());
+    private final Logger logger = org.slf4j.LoggerFactory.getLogger(RenamerController.class);
     @FXML
     public Button addFilesButton;
     private final ObservableList<FileToRename> selectedFiles = FXCollections.observableArrayList();
@@ -69,7 +69,6 @@ public class RenamerController {
     private Stage stage;
 
     public RenamerController() {
-        logger.log(INFO, "RenamerController constructor");
         this.renameManager = new RenameManager(this.selectedFiles);
         updateTableView();
     }
@@ -108,7 +107,7 @@ public class RenamerController {
 
                 return new SimpleStringProperty(text);
             } catch (IOException e) {
-                logger.log(ERROR, "Error getting last modified time", e);
+                logger.error("Error getting last modified time", e);
                 return new SimpleStringProperty("Error");
             }
         });
@@ -127,7 +126,7 @@ public class RenamerController {
     }
 
     @FXML protected void onAddFilesButtonClick() {
-        logger.log(INFO, "Add originalFiles button clicked");
+
 
         FileChooser fileChooser = new FileChooser();
 
@@ -135,7 +134,6 @@ public class RenamerController {
         var readonlyFiles = fileChooser.showOpenMultipleDialog(stage);
 
         if (readonlyFiles == null) {
-            logger.log(INFO, "No originalFiles selected");
             return;
         }
 
@@ -155,25 +153,19 @@ public class RenamerController {
             return false;
         });
 
-        logger.log(INFO, "New files selected: " + files.size());
         this.selectedFiles.addAll(FileToRename.convertToFilesToRename(files));
-        logger.log(DEBUG, "Files added to list");
-
 
         updateTableView();
     }
 
     private void onNewSelectedFilesChange(ListChangeListener.Change<? extends File> change) {
-        logger.log(INFO, "Selected originalFiles changed");
+        logger.info("Selected originalFiles changed");
     }
 
     private void onRemoveSelectedButtonClick(ActionEvent actionEvent) {
-        logger.log(INFO, "Remove selected button clicked");
         var selectedItems = this.selectedFilesTableView.getSelectionModel().getSelectedItems();
-        logger.log(DEBUG, "Selected items: " + selectedItems.size());
 
         this.selectedFiles.removeAll(selectedItems);
-        logger.log(DEBUG, "Selected items removed from list");
 
         // We clear the selection
         this.selectedFilesTableView.getSelectionModel().clearSelection();
@@ -182,7 +174,6 @@ public class RenamerController {
     }
 
     private void onClearAllButtonClick(ActionEvent actionEvent) {
-        logger.log(INFO, "Clear all button clicked");
         this.selectedFiles.clear();
 
         updateTableView();
@@ -276,7 +267,7 @@ public class RenamerController {
 
     public void setStageAndSetupListeners(Stage stage) {
         stage.setOnCloseRequest(event -> {
-            logger.log(INFO, "Stage closed");
+            logger.info("Stage closed");
             Platform.exit();
         });
 
@@ -322,7 +313,7 @@ public class RenamerController {
         try {
             renameManager.renameFiles(mask);
         } catch (IOException e) {
-            logger.log(ERROR, "Error renaming files", e);
+            logger.error("Error renaming files", e);
             // We show error dialog
             var alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
