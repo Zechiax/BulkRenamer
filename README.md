@@ -6,16 +6,38 @@ An app for easy renaming of multiple files
 
 ### Prerequisites
 
-- Java 20
+- Java 17
 - Maven
 
 ## How to run
 
-To instantly run the app, run at the root of the project:
+The app is modularized into 3 modules: app, api and plugins. The app modules contains the main class, the api module contains the interfaces and the plugins module contains the built-in plugins.
+
+The standalone app comes with no plugin functionality, everything is done through the interface. To add plugins, you will need to have a plugins folder in the same directory as the app jar. The plugins folder should contain the plugin jars.
+
+To easily run the app with the default set of plugins, there are 2 script, one for linux and one for windows.
+
+On Linux run:
+   
+```bash
+./run.sh
+```
+
+On Windows run:
 
 ```bash
-mvn clean javafx:run
+./run.bat
 ```
+
+This will build the project in the `dist` folder and run the app, also copy all plugins before running, so they will be activated.
+
+If you wish to build the app yourself, you can run:
+
+```bash
+mvn clean package
+```
+
+This will build the standard targets in each respective module.
 
 ## How to use
 
@@ -39,7 +61,13 @@ The flow of the app is as follows:
 
 ## Plugin interface
 
-One can write own plugins/masks for the app. To do so, one needs to implement the `RenamePlugin` interface, optionally `RenamePluginBase` as it contains some helper methods.
+One can write own plugins/masks for the app.
+
+The program uses the [pf4j](https://github.com/pf4j/pf4j) library for plugin management.
+
+The plugin interface is defined in the `api` module, if you wish to create your own plugin, I recommend adding a module under the `plugins` module, and follow the same structure as the built-in plugins.
+
+After you built your plugin, you can simply compile the project and copy the plugin jar to the `plugins` folder, and it will be loaded on the next run.
 
 ## Images
 
