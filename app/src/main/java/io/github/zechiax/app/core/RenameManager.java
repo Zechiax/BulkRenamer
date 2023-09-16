@@ -1,5 +1,8 @@
 package io.github.zechiax.app.core;
 
+import io.github.zechiax.api.CounterSettings;
+import io.github.zechiax.api.FileToRename;
+import io.github.zechiax.api.PluginContext;
 import io.github.zechiax.app.plugins.*;
 import javafx.collections.ObservableList;
 

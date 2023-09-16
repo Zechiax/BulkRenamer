@@ -6,6 +6,7 @@ module io.github.zechiax.app {
     requires org.apache.commons.io;
     requires java.logging;
     requires org.jetbrains.annotations;
+    requires api;
 
 
     opens io.github.zechiax.app to javafx.fxml;

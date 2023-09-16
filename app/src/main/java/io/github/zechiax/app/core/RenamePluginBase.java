@@ -1,5 +1,6 @@
 package io.github.zechiax.app.core;
 
+import io.github.zechiax.api.PluginContext;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NotNull;
 

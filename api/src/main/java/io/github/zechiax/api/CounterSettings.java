@@ -1,4 +1,4 @@
-package io.github.zechiax.app.core;
+package io.github.zechiax.api;
 
 public class CounterSettings {
     private int start;

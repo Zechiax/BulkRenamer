@@ -1,6 +1,6 @@
 package io.github.zechiax.app;
 
-import io.github.zechiax.app.core.FileToRename;
+import io.github.zechiax.api.FileToRename;
 import io.github.zechiax.app.core.Helpers.FileSizeConverter;
 import io.github.zechiax.app.core.RenameManager;
 import javafx.application.Platform;

@@ -1,6 +1,6 @@
 package io.github.zechiax.app.plugins;
 
-import io.github.zechiax.app.core.PluginContext;
+import io.github.zechiax.api.PluginContext;
 import io.github.zechiax.app.core.RenamePluginBase;
 import io.github.zechiax.app.core.RenamingException;
 
