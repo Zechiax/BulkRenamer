@@ -50,7 +50,7 @@ The flow of the app is as follows:
 4. Click `Rename` to rename the files
 5. If everything went well, you will see a message about the successful renaming
 
-## Built-in masks
+## Default plugins
 
 - \[N] - Name of the file
 - \[N#-#] - Name of the file from # to #
