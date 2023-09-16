@@ -10,6 +10,10 @@
     </parent>
 
     <artifactId>plugins</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>NameMaskPlugin</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

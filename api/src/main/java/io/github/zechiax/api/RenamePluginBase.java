@@ -2,6 +2,7 @@ package io.github.zechiax.api;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NotNull;
+import org.pf4j.ExtensionPoint;
 import org.pf4j.Plugin;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.Collections;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 
-public abstract class RenamePluginBase extends Plugin {
+public abstract class RenamePluginBase implements ExtensionPoint {
     protected final Logger logger = Logger.getLogger(this.getClass().getName());
     private final String name = this.getClass().getSimpleName();
     protected PluginContext context;

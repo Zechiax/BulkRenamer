@@ -3,18 +3,21 @@ package io.github.zechiax.app.core;
 import io.github.zechiax.api.*;
 import io.github.zechiax.app.plugins.*;
 import javafx.collections.ObservableList;
+import org.pf4j.PluginManager;
+import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 public class RenameManager {
-    private static final Logger logger = Logger.getLogger(RenameManager.class.getName());
+    private static final Logger logger = org.slf4j.LoggerFactory.getLogger(RenameManager.class);
     private final ArrayList<RenamePluginBase> plugins;
     private final ObservableList<FileToRename> files;
     private final CounterSettings counterSettings = CounterSettings.getDefault();
     private String renameFind = "";
     private String renameReplace = "";
+
+    PluginManager pluginManager = new RenamePluginManager();
 
     public void setFindReplace(String findString, String replacementString) {
         renameFind = findString;
@@ -25,6 +28,19 @@ public class RenameManager {
         this.files = files;
         plugins = new ArrayList<>();
         LoadDefaultPlugins();
+
+        logger.info("Loading plugins");
+        pluginManager.loadPlugins();
+        pluginManager.startPlugins();
+
+        var loadedPlugins = pluginManager.getExtensions(RenamePluginBase.class);
+
+        for (var plugin : loadedPlugins) {
+            logger.info("Loaded plugin: " + plugin.getName());
+            plugins.add(plugin);
+        }
+
+        logger.info("Loaded plugins: " + plugins.size());
     }
 
     public ArrayList<RenamePluginBase> GetPlugins() {
@@ -32,8 +48,6 @@ public class RenameManager {
     }
 
     public void LoadDefaultPlugins() {
-        plugins.add(new NameMask());
-        plugins.add(new NameRangeMask());
         plugins.add(new ExtensionMask());
         plugins.add(new ExtensionRangeMask());
         plugins.add(new CounterMask());
@@ -89,7 +103,7 @@ public class RenameManager {
             try {
                 newName = plugin.rename();
             } catch (RenamingException e) {
-                logger.warning("Plugin " + plugin.getName() + " threw an exception: " + e.getMessage());
+                logger.warn("Plugin " + plugin.getName() + " threw an exception: " + e.getMessage());
                 newName = "<Error!>";
             }
 

@@ -7,6 +7,8 @@ module io.github.zechiax.app {
     requires java.logging;
     requires org.jetbrains.annotations;
     requires api;
+    requires org.pf4j;
+    requires org.slf4j;
 
 
     opens io.github.zechiax.app to javafx.fxml;

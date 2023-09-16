@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import static java.lang.System.Logger.Level.*;
 
 public class RenamerController {
-    private final RenameManager fileManager;
+    private final RenameManager renameManager;
     private final System.Logger logger = System.getLogger(RenamerController.class.getName());
     @FXML
     public Button addFilesButton;
@@ -69,7 +69,8 @@ public class RenamerController {
     private Stage stage;
 
     public RenamerController() {
-        this.fileManager = new RenameManager(this.selectedFiles);
+        logger.log(INFO, "RenamerController constructor");
+        this.renameManager = new RenameManager(this.selectedFiles);
         updateTableView();
     }
 
@@ -87,7 +88,7 @@ public class RenamerController {
         oldNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
         newNameColumn.setCellValueFactory(cellData -> {
             var file = cellData.getValue();
-            var newName = fileManager.getRenamedFile(getNewName(), file);
+            var newName = renameManager.getRenamedFile(getNewName(), file);
             return new SimpleStringProperty(newName);
         });
         fileSizeColumn.setCellValueFactory(cellData -> {
@@ -202,7 +203,7 @@ public class RenamerController {
         var step = Integer.parseInt(stepTextField.getText());
         var padding = Integer.parseInt(paddingTextField.getText());
 
-        fileManager.setCounterSettings(start, step, padding);
+        renameManager.setCounterSettings(start, step, padding);
 
         updateTableView();
     }
@@ -268,7 +269,7 @@ public class RenamerController {
             return;
         }
 
-        fileManager.setFindReplace(findTextField.getText(), replaceTextField.getText());
+        renameManager.setFindReplace(findTextField.getText(), replaceTextField.getText());
 
         updateTableView();
     }
@@ -292,7 +293,7 @@ public class RenamerController {
         this.newNameTextField.textProperty().addListener(this::onTextFieldChange);
         this.newExtensionTextField.textProperty().addListener(this::onTextFieldChange);
 
-        var counterSettings = fileManager.getCounterSettings();
+        var counterSettings = renameManager.getCounterSettings();
 
         this.firstNumberTextField.setText(Integer.toString(counterSettings.getStart()));
         this.stepTextField.setText(Integer.toString(counterSettings.getStep()));
@@ -319,7 +320,7 @@ public class RenamerController {
         var mask = getNewName();
 
         try {
-            fileManager.renameFiles(mask);
+            renameManager.renameFiles(mask);
         } catch (IOException e) {
             logger.log(ERROR, "Error renaming files", e);
             // We show error dialog
