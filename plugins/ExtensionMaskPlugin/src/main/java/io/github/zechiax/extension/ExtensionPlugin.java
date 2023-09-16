@@ -1,4 +1,4 @@
-package io.github.zechiax.name;
+package io.github.zechiax.extension;
 
 import io.github.zechiax.api.RangePluginBase;
 import io.github.zechiax.api.RenamePluginBase;
@@ -6,17 +6,19 @@ import io.github.zechiax.api.RenamingException;
 import org.pf4j.Extension;
 import org.pf4j.Plugin;
 
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
-public class NamePlugin extends Plugin {
+public class ExtensionPlugin extends Plugin {
 
     @Extension
-    public static class NameMask extends RenamePluginBase {
-        private final String pattern = "[N]";
+    public static class ExtensionMask extends RenamePluginBase {
+        private static final Logger logger = Logger.getLogger(ExtensionMask.class.getName());
+        private final String pattern = "[E]";
 
         @Override
         public String getName() {
-            return "Name Mask";
+            return "Extension Mask";
         }
 
         @Override
@@ -32,23 +34,21 @@ public class NamePlugin extends Plugin {
 
             for (var index : indices) {
                 // On the index, we replace the pattern with the file name
-                newName = replaceSubstring(newName, file.getBaseName(), index, index + pattern.length());
+                newName = replaceSubstring(newName, file.getExtension(), index, index + pattern.length());
             }
 
             return newName;
         }
-
-
     }
 
     @Extension
-    public static class NameRangeMask extends RangePluginBase {
-        private final String pattern = "(\\[N(\\d+)-(\\d+)?\\])";
+    public class ExtensionRangeMask extends RangePluginBase {
+        private final String pattern = "(\\[E(\\d+)-(\\d+)?\\])";
         private final Pattern patternRegex = Pattern.compile(pattern);
 
         @Override
         public String getName() {
-            return "Name Range Mask";
+            return "Extension Range Mask";
         }
 
         @Override
@@ -66,27 +66,25 @@ public class NamePlugin extends Plugin {
             for (var group : groups) {
                 var indices = getPatternIndices(group, newName);
 
-                var baseName = context.getCurrentFile().getBaseName();
+                var extension = context.getCurrentFile().getExtension();
 
-                var start = Integer.parseInt(group.split("-")[0].replace("[N", ""));
+                var start = Integer.parseInt(group.split("-")[0].replace("[E", ""));
                 var endString = group.split("-")[1].replace("]", "");
 
                 if (endString.isEmpty()) {
-                    endString = String.valueOf(baseName.length());
+                    endString = String.valueOf(extension.length());
                 }
 
                 var end = Integer.parseInt(endString);
 
-                if (!isStartEndValid(start, end, baseName.length())) {
+                if (!isStartEndValid(start, end, extension.length())) {
                     throw new RenamingException("Start and end are not valid");
                 }
 
-                newName = replaceSubstring(newName, baseName.substring(start - 1, end), indices[0], indices[0] + group.length());
+                newName = replaceSubstring(newName, extension.substring(start - 1, end), indices[0], indices[0] + group.length());
             }
 
             return newName;
         }
     }
-
-
 }

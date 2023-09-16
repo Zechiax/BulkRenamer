@@ -1,12 +1,15 @@
-package io.github.zechiax.app.plugins;
+package io.github.zechiax.date;
 
-import io.github.zechiax.api.PluginContext;
 import io.github.zechiax.api.RenamePluginBase;
 import io.github.zechiax.api.RenamingException;
+import org.pf4j.Extension;
+import org.pf4j.Plugin;
 
 import java.time.LocalDate;
 
-public class DateMask extends RenamePluginBase {
+public class DatePlugin extends Plugin  {
+    @Extension
+    public static class DateMask extends RenamePluginBase {
     // This will have 3 masks
     // [D] - Day
     // [M] - Month
@@ -52,4 +55,6 @@ public class DateMask extends RenamePluginBase {
 
         return newName;
     }
+}
+
 }

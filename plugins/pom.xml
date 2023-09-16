@@ -13,6 +13,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>NameMaskPlugin</module>
+        <module>ExtensionMaskPlugin</module>
+        <module>DateMaskPlugin</module>
     </modules>
 
     <properties>
