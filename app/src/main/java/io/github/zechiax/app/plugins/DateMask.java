@@ -1,8 +1,8 @@
 package io.github.zechiax.app.plugins;
 
 import io.github.zechiax.api.PluginContext;
-import io.github.zechiax.app.core.RenamePluginBase;
-import io.github.zechiax.app.core.RenamingException;
+import io.github.zechiax.api.RenamePluginBase;
+import io.github.zechiax.api.RenamingException;
 
 import java.time.LocalDate;
 
@@ -20,7 +20,7 @@ public class DateMask extends RenamePluginBase {
     }
 
     @Override
-    public String rename(PluginContext context) throws RenamingException {
+    public String rename() throws RenamingException {
         var date = LocalDate.now();
 
         var day = String.format("%02d", date.getDayOfMonth());

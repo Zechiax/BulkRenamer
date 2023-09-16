@@ -1,7 +1,7 @@
 package io.github.zechiax.app.plugins;
 
 import io.github.zechiax.api.PluginContext;
-import io.github.zechiax.app.core.RenamePluginBase;
+import io.github.zechiax.api.RenamePluginBase;
 
 public class CounterMask extends RenamePluginBase {
     private static final String pattern = "[C]";
@@ -28,7 +28,7 @@ public class CounterMask extends RenamePluginBase {
     }
 
     @Override
-    public String rename(PluginContext context) {
+    public String rename() {
         var indices = getPatternIndices(pattern, context.getCurrentName());
 
         var counter = getStringCountFromContext(context);

@@ -1,6 +1,6 @@
-package io.github.zechiax.app.plugins;
+package io.github.zechiax.api;
 
-import io.github.zechiax.app.core.RenamePluginBase;
+import io.github.zechiax.api.RenamePluginBase;
 
 public abstract class RangePluginBase extends RenamePluginBase {
     protected static boolean isStartEndValid(int start, int end, int length) {

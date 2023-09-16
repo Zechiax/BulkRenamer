@@ -1,8 +1,6 @@
 package io.github.zechiax.app.core;
 
-import io.github.zechiax.api.CounterSettings;
-import io.github.zechiax.api.FileToRename;
-import io.github.zechiax.api.PluginContext;
+import io.github.zechiax.api.*;
 import io.github.zechiax.app.plugins.*;
 import javafx.collections.ObservableList;
 
@@ -12,7 +10,7 @@ import java.util.logging.Logger;
 
 public class RenameManager {
     private static final Logger logger = Logger.getLogger(RenameManager.class.getName());
-    private final ArrayList<RenamePlugin> plugins;
+    private final ArrayList<RenamePluginBase> plugins;
     private final ObservableList<FileToRename> files;
     private final CounterSettings counterSettings = CounterSettings.getDefault();
     private String renameFind = "";
@@ -29,15 +27,7 @@ public class RenameManager {
         LoadDefaultPlugins();
     }
 
-    public void AddPlugin(RenamePlugin plugin) {
-        plugins.add(plugin);
-    }
-
-    public void RemovePlugin(RenamePlugin plugin) {
-        plugins.remove(plugin);
-    }
-
-    public ArrayList<RenamePlugin> GetPlugins() {
+    public ArrayList<RenamePluginBase> GetPlugins() {
         return plugins;
     }
 
@@ -93,12 +83,11 @@ public class RenameManager {
         for (var plugin : plugins) {
             var context = new PluginContext(newName, file, index, files, mask, counterSettings);
 
-            if (plugin instanceof RenamePluginBase) {
-                ((RenamePluginBase) plugin).setContext(context);
-            }
+            plugin.setContext(context);
+
 
             try {
-                newName = plugin.rename(context);
+                newName = plugin.rename();
             } catch (RenamingException e) {
                 logger.warning("Plugin " + plugin.getName() + " threw an exception: " + e.getMessage());
                 newName = "<Error!>";

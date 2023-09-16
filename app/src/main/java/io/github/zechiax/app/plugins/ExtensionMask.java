@@ -1,7 +1,7 @@
 package io.github.zechiax.app.plugins;
 
 import io.github.zechiax.api.PluginContext;
-import io.github.zechiax.app.core.RenamePluginBase;
+import io.github.zechiax.api.RenamePluginBase;
 
 import java.util.logging.Logger;
 
@@ -15,7 +15,7 @@ public class ExtensionMask extends RenamePluginBase {
     }
 
     @Override
-    public String rename(PluginContext context) {
+    public String rename() {
         if (!isPatternInMask(pattern)) {
             return context.getCurrentName();
         }

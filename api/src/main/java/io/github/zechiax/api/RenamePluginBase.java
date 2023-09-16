@@ -1,25 +1,29 @@
-package io.github.zechiax.app.core;
+package io.github.zechiax.api;
 
-import io.github.zechiax.api.PluginContext;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NotNull;
+import org.pf4j.Plugin;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 
-public abstract class RenamePluginBase implements RenamePlugin {
+public abstract class RenamePluginBase extends Plugin {
     protected final Logger logger = Logger.getLogger(this.getClass().getName());
     private final String name = this.getClass().getSimpleName();
     protected PluginContext context;
-    @Override
+
     public String getName() {
         return name;
     }
 
     public void setContext(PluginContext context) {
         this.context = context;
+    }
+
+    public String rename() throws RenamingException {
+        return context.getCurrentName();
     }
 
     public PluginContext getContext() {

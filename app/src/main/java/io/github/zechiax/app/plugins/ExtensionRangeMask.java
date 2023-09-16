@@ -1,7 +1,8 @@
 package io.github.zechiax.app.plugins;
 
 import io.github.zechiax.api.PluginContext;
-import io.github.zechiax.app.core.RenamingException;
+import io.github.zechiax.api.RangePluginBase;
+import io.github.zechiax.api.RenamingException;
 
 import java.util.regex.Pattern;
 
@@ -13,7 +14,7 @@ public class ExtensionRangeMask extends RangePluginBase {
         return "Extension Range Mask";
     }
     @Override
-    public String rename(PluginContext context) throws RenamingException {
+    public String rename() throws RenamingException {
         // We match the pattern to the current name
         var matcher = patternRegex.matcher(context.getCurrentName());
 
