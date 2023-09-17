@@ -11,9 +11,9 @@ An app for easy renaming of multiple files
 
 ## How to run
 
-The app is modularized into 3 modules: app, api and plugins. The app modules contains the main class, the api module contains the interfaces and the plugins module contains the built-in plugins.
+The app is modularized into 3 modules: app, api and plugins. The app modules contains the main class, the api module contains the interfaces and base plugin classes and the plugins module contains the implemented plugins.
 
-The standalone app comes with no plugin functionality, everything is done through the interface. To add plugins, you will need to have a plugins folder in the same directory as the app jar. The plugins folder should contain the plugin jars.
+The standalone app comes with no plugin functionality. To add plugins, you will need to have a plugins folder in the same directory as the app jar.
 
 To easily run the app with the default set of plugins, there are 2 scripts, one for linux and one for windows.
 
