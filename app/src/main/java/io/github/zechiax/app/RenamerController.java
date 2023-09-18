@@ -27,7 +27,7 @@ public class RenamerController {
     private final Logger logger = org.slf4j.LoggerFactory.getLogger(RenamerController.class);
     @FXML
     public Button addFilesButton;
-    private final ObservableList<FileToRename> selectedFiles = FXCollections.observableArrayList();
+    private ObservableList<FileToRename> selectedFiles = FXCollections.observableArrayList();
     @FXML
     public Button removeSelectedButton;
     @FXML
@@ -329,5 +329,6 @@ public class RenamerController {
         alert.setHeaderText("Successfully renamed " + count + " files");
         alert.setContentText("The files have been renamed successfully");
         alert.showAndWait();
+        onClearAllButtonClick(actionEvent);
     }
 }

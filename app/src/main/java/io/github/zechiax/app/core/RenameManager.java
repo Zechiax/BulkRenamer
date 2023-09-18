@@ -120,4 +120,8 @@ public class RenameManager {
             file.renameTo(name);
         }
     }
+
+    public ObservableList<FileToRename> getFiles() {
+        return files;
+    }
 }
