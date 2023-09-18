@@ -1,12 +1,13 @@
 package io.github.zechiax.api;
 
-import javafx.collections.ObservableList;
+
+import java.util.List;
 
 public class PluginContext {
     private final String currentName;
     private final FileToRename currentFile;
     private final int originalFilesIndex;
-    private final ObservableList<FileToRename> originalFiles;
+    private final List<FileToRename> originalFiles;
     private final String mask;
     private final CounterSettings counterSettings;
 
@@ -14,7 +15,7 @@ public class PluginContext {
         String currentName,
         FileToRename currentFile,
         int originalFilesIndex,
-        ObservableList<FileToRename> originalFiles,
+        List<FileToRename> originalFiles,
         String mask,
         CounterSettings counterSettings
     ) {
@@ -38,7 +39,7 @@ public class PluginContext {
         return originalFilesIndex;
     }
 
-    public ObservableList<FileToRename> getOriginalFiles() {
+    public List<FileToRename> getOriginalFiles() {
         return originalFiles;
     }
 
